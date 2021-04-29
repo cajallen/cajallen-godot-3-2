@@ -619,7 +619,7 @@ Vector2 TileSet::autotile_get_subtile_for_bitmask(int p_id, uint16_t p_bitmask, 
 
 	ERR_FAIL_COND_V(!tile_map.has(p_id), Vector2());
 	//First try to forward selection to script
-	if (p_tilemap_node->get_class_name() == "TileMap") {
+	if (p_tilemap_node && p_tilemap_node->get_class_name() == "TileMap") {
 		if (get_script_instance() != NULL) {
 			if (get_script_instance()->has_method("_forward_subtile_selection")) {
 				Variant ret = get_script_instance()->call("_forward_subtile_selection", p_id, p_bitmask, p_tilemap_node, p_tile_location);
@@ -1168,6 +1168,7 @@ void TileSet::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("autotile_get_navigation_polygon", "id", "coord"), &TileSet::autotile_get_navigation_polygon);
 	ClassDB::bind_method(D_METHOD("autotile_set_bitmask", "id", "bitmask", "flag"), &TileSet::autotile_set_bitmask);
 	ClassDB::bind_method(D_METHOD("autotile_get_bitmask", "id", "coord"), &TileSet::autotile_get_bitmask);
+	ClassDB::bind_method(D_METHOD("autotile_get_subtile_for_bitmask", "id", "bitmask", "tilemap", "tilemap_position"), &TileSet::autotile_get_subtile_for_bitmask, DEFVAL(Variant ()), DEFVAL(Vector2()));
 	ClassDB::bind_method(D_METHOD("autotile_set_bitmask_mode", "id", "mode"), &TileSet::autotile_set_bitmask_mode);
 	ClassDB::bind_method(D_METHOD("autotile_get_bitmask_mode", "id"), &TileSet::autotile_get_bitmask_mode);
 	ClassDB::bind_method(D_METHOD("autotile_set_spacing", "id", "spacing"), &TileSet::autotile_set_spacing);
